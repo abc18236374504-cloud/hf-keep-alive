@@ -1,15 +1,16 @@
-name: HF Space Keep Alive
+name: HF Spaces Keep Alive
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
-  ping:
+  keep-alive:
     runs-on: ubuntu-latest
     steps:
       - name: Ping qwen-api-relay
-        run: curl -sS --max-time 30 https://whatcc-qwen-api-relay.hf.space/health
-      - name: Ping qwen2api
-        run: curl -sS --max-time 30 https://whatcc-qwen2api.hf.space/v1/models -H "Authorization: Bearer an123456"
+        run: curl -s -o /dev/null -w "%{http_code}" https://whatcc-qwen-api-relay.hf.space/health
+
+      - name: Ping qwen2api-go
+        run: curl -s -o /dev/null -w "%{http_code}" https://whatcc-qwen2api-go.hf.space/models
